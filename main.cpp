@@ -13,14 +13,14 @@ int main() {
     int secretNum;
 
     srand (time(NULL));
-    cout<< "Welcome to CS301 guessing games"<<endl;
+    cout<< "Welcome to CS301 Guessing Game"<<endl;
 
     while (playMore == 'Y')
     {
         secretNum = rand()  % 30 + 1;
         guessingNum =0;
         guessed = false;
-        cout<<"The games will randomly select a secret number from 1-30"<<endl;
+        cout<<"The game will randomly select a secret number from 1-30"<<endl;
         cout<<"You have maximum of 5 chances to guess the secret number"<<endl;
         cout<<"After each wrong guess, the game will tell you if your number is less or greater than the secret number"<<endl<<endl;
         cout<<"Let's start a new round"<<endl;
