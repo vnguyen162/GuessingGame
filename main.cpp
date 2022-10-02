@@ -1,23 +1,33 @@
 #include <time.h>
 #include<cstdlib>
 #include<limits>
+#include<string>
 #include <iostream>
 using namespace std;
+
+class OutOfRange
+{
+private:
+    int num;
+public:
+    OutOfRange(int number){ num = number;}
+    string getMsg(){return to_string(num) + " is out of range";}
+};
 
 int GetNum();
 
 int main() {
-    char playMore = 'Y';
+    char playMore = 'y';
     int guessingNum = 0;
     bool guessed = false;
     int secretNum;
 
     srand (time(NULL));
-    cout<< "Welcome to CS301 Guessing Game"<<endl;
+    cout<< "*** WELCOME TO CS301 GUESSING GAME ***"<<endl<<endl;
 
-    while (playMore == 'Y')
+    while (playMore == 'y')
     {
-        secretNum = rand()  % 30 + 1;
+        secretNum = rand()  % 30 + 1; // get a random number from 1 to 30
         guessingNum =0;
         guessed = false;
         cout<<"The game will randomly select a secret number from 1-30"<<endl;
@@ -34,7 +44,7 @@ int main() {
             if(guessingNum == secretNum)
             {
                 guessed = true;
-                cout<<"Congratulation!!!\nYour answer is correct. The secret number is "<< secretNum<<endl;
+                cout<<"Congratulation!!!\nYour answer is correct. ";//The secret number is "<< secretNum<<endl;
                 break;
             }
             else
@@ -47,11 +57,13 @@ int main() {
             }
         }
         if (guessed == false)
-            cout<<"Sorry, you are out of guess. The secret number is " << secretNum<<endl;
+            cout<<"Sorry, you are out of guess. ";
+
+        cout<< "The secret number is " << secretNum<<endl<<endl;
 
         cout<<"Do you want to play another game? (y/n) "<<endl;
         cin>>playMore;
-        playMore = toupper(playMore);
+        playMore = tolower(playMore);
         cout<<endl;
     }
 
@@ -73,7 +85,7 @@ int GetNum()
             if (cin.fail()) //Validate data type
                 throw "Invalid input";
             if (guessingNum < 1 || guessingNum > 30) //validate range of input
-                throw guessingNum;
+                throw OutOfRange(guessingNum);
             requestingInput = false;
         }
         //handle wrong type
@@ -83,9 +95,10 @@ int GetNum()
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
         }
         //handle out of range number
-        catch (int wrongNum) {
-            cout<<wrongNum << " is out of range" <<endl;
+        catch (OutOfRange invalid) {
+            cout<<invalid.getMsg()<<endl;
         }
     }
     return guessingNum;
+
 }
